@@ -1,0 +1,190 @@
+<!-- This part is already explained in the previous part 😊-->
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title> Defense Solutions | Eagleye Defense Solutions</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css"></noscript>
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+</head>
+<body class="is-preload">
+
+    <!-- Page Wrapper -->
+    <div id="page-wrapper">
+    
+        <!-- Header -->
+        <header id="header">
+            <!-- Website title -->
+            <h1><a href="index.html">Eagleye Defense Solutions</a></h1>
+            <!-- Navigation menu -->
+            <nav id="nav">
+                <ul>
+                    <li class="special">
+                        <!-- Menu toggle button -->
+                        <a href="#menu" class="menuToggle"><span>Menu</span></a>
+                        <!-- Dropdown menu -->
+                        <div id="menu">
+                            <ul>
+                                <!-- Navigation links -->
+                                <li><a href="index.html">Home</a></li>
+                                <li><a href="about_us.html">About Us</a></li>
+                                <li><a href="products.html">Products</a></li>
+                                <li><a href="careers.html">Careers</a></li>
+                                <li><a href="contact.html">Contact</a></li>
+                                <li><a href="newsletter.html">Newsletter</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+    
+        <!-- Main content -->
+        <article id="main">
+            <!-- Animated header -->
+            <head>
+                <!-- Meta tags -->
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <!-- Title -->
+                <title>Animated Header</title>
+                <!-- CSS for header animation -->
+                <style>
+                    @keyframes moveHeader {
+                        0% {
+                            transform: translateY(0);
+                        }
+                        50% {
+                            transform: translateY(-10px);
+                        }
+                        100% {
+                            transform: translateY(0);
+                        }
+                    }
+            
+                    header h2 {
+                        animation: moveHeader 2s infinite;
+                    }
+                </style>
+            </head>
+            <!-- Header section -->
+            <header>
+                <!-- Header title and subtitle -->
+                <h2>Contact</h2>
+                <p>Connect with us</p>
+            </header>
+            <!-- Contact form -->
+            <div class="contact">
+                <form id="contact-form">
+                    <!-- Form fields -->
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Your name">
+    
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Your email address">
+    
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" name="subject" placeholder="Your subject">
+    
+                    <label for="message">Message</label>
+                    <input type="text" id="message" name="message" placeholder="Your message">
+    
+                    <!-- Submit button -->
+                    <input type="submit" value="Submit">
+                </form>
+                <!-- Display form submission result -->
+                <div id="contact-result"></div>
+            </div>
+        </article>
+    
+        <!-- Footer -->
+        <footer id="footer">
+            <!-- Social media icons -->
+            <ul class="icons">
+                <li><a href="https://www.instagram.com/medohmam/" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+                <li><a href="https://www.facebook.com/medo.hmam.16" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+                <li><a href="mailto:tareqhmam24@gmail.com" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+            </ul>
+            <!-- Copyright information -->
+            <ul class="copyright">
+                <li>&copy; Eagleye Defense Solutions</li>
+                <li>Designers: MOKAK</li>
+            </ul>
+        </footer>
+    
+    </div>
+    
+    <!-- Scripts -->
+    <!-- jQuery -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // JavaScript code for form submission handling
+            const form = document.getElementById('contact-form');
+            const resultDiv = document.getElementById('contact-result');
+    
+            // Retrieve data from localStorage if exists
+            const savedData = JSON.parse(localStorage.getItem('contactData'));
+            if (savedData) {
+                console.log('Data retrieved from localStorage:', savedData);
+            }
+    
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+    
+                const formData = new FormData(form);
+                const data = new URLSearchParams(formData);
+    
+                // Check if any form fields are empty
+                let isFormValid = true;
+                formData.forEach(value => {
+                    if (!value) {
+                        isFormValid = false;
+                    }
+                });
+    
+                if (!isFormValid) {
+                    const errorMessage = 'Error: Please fill in all fields';
+                    console.error(errorMessage);
+                    resultDiv.innerHTML = '<p>' + errorMessage + '</p>';
+                    return; // Exit the function
+                }
+    
+                fetch('https://reqres.in/api/users', {
+                    method: 'POST',
+                    body: data
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Data received:', data);
+                    resultDiv.innerHTML = '<p>Message sent successfully!</p>';
+    
+                    // Save data to localStorage
+                    localStorage.setItem('contactData', JSON.stringify(data));
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                    resultDiv.innerHTML = '<p>Error: ' + error.message + '</p>';
+                });
+            });
+        });
+    </script>
+    
+    
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+    
+    </body>
+    </html>
